@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industry 5.0+ Future Predictor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
+            min-height: 100vh;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="text-white p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <svg class="w-12 h-12 text-purple-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+                <h1 class="text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+                    Industry 5.0 Predictor
+                </h1>
+                <svg class="w-12 h-12 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+            </div>
+            <p class="text-xl text-slate-300 mb-2">
+                Analyzing Agentic AI impact on value creation through 2035
+            </p>
+            <p class="text-sm text-purple-300">
+                Autonomous agents are reshaping industrial transformation at unprecedented speed
+            </p>
+        </div>
+
+        <!-- Agentic AI Banner -->
+        <div class="glass rounded-2xl p-6 mb-8" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.3) 0%, rgba(236, 72, 153, 0.3) 100%);">
+            <div class="flex items-start gap-4">
+                <svg class="w-8 h-8 text-yellow-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                <div>
+                    <h3 class="text-xl font-bold mb-2 text-purple-300">The Agentic AI Revolution</h3>
+                    <p class="text-slate-200 mb-3">
+                        Unlike previous AI systems that assisted human decisions, Agentic AI autonomously plans, executes, and optimizes complex workflows. 
+                        This fundamental shift is accelerating value creation by 10-15x compared to traditional AI approaches.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div class="bg-purple-500/20 rounded-lg p-3">
+                            <div class="font-bold text-purple-300">Autonomous Decision-Making</div>
+                            <div class="text-slate-300">Agents operate independently without human intervention</div>
+                        </div>
+                        <div class="bg-pink-500/20 rounded-lg p-3">
+                            <div class="font-bold text-pink-300">Multi-Agent Collaboration</div>
+                            <div class="text-slate-300">Agents coordinate to solve complex problems</div>
+                        </div>
+                        <div class="bg-blue-500/20 rounded-lg p-3">
+                            <div class="font-bold text-blue-300">Continuous Learning</div>
+                            <div class="text-slate-300">Systems improve performance in real-time</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historical Context -->
+        <div class="glass rounded-2xl p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                Industrial Revolutions: From Steam to Agentic AI
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4" id="historical-cards"></div>
+        </div>
+
+        <!-- Industry Selector -->
+        <div class="glass rounded-2xl p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-4">Select Industry for Agentic AI Analysis</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-6" id="industry-selector"></div>
+            
+            <button id="analyze-btn" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg hover:shadow-xl">
+                Generate 2035 Predictions
+            </button>
+        </div>
+
+        <!-- Results Container -->
+        <div id="results" class="hidden space-y-8">
+            <!-- Industry Insights -->
+            <div class="glass rounded-2xl p-8">
+                <h2 class="text-2xl font-bold mb-6" id="insights-title"></h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6" id="insights-grid"></div>
+                <div class="bg-blue-500/20 rounded-xl p-4 border border-blue-400/30">
+                    <h3 class="font-bold text-blue-400 mb-2">Agentic AI Use Cases</h3>
+                    <p class="text-sm" id="use-cases"></p>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="glass rounded-2xl p-8">
+                <h2 class="text-2xl font-bold mb-6">Technology Adoption, Productivity & Value Creation (2024-2035)</h2>
+                <canvas id="mainChart" height="100"></canvas>
+            </div>
+
+            <div class="glass rounded-2xl p-8">
+                <h2 class="text-2xl font-bold mb-6">Agentic AI vs Traditional AI Integration (2024-2035)</h2>
+                <canvas id="aiChart" height="100"></canvas>
+            </div>
+
+            <!-- ROI Calculator -->
+            <div class="glass rounded-2xl p-8">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Agentic AI ROI Calculator - <span id="roi-industry"></span>
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2 text-slate-300">Current Annual Revenue ($)</label>
+                        <input type="number" id="revenue" placeholder="e.g., 50000000" class="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-3 text-white placeholder-slate-400">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2 text-slate-300">Number of Employees</label>
+                        <input type="number" id="employees" placeholder="e.g., 500" class="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-3 text-white placeholder-slate-400">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2 text-slate-300">Agentic AI Investment Budget ($)</label>
+                        <input type="number" id="investment" placeholder="e.g., 5000000" class="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-3 text-white placeholder-slate-400">
+                    </div>
+                </div>
+
+                <button id="calc-roi-btn" class="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg hover:shadow-xl">
+                    Calculate ROI
+                </button>
+
+                <div id="roi-results" class="hidden mt-8 space-y-6"></div>
+            </div>
+
+            <!-- Key Insights -->
+            <div class="glass rounded-2xl p-8" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(236, 72, 153, 0.2) 50%, rgba(59, 130, 246, 0.2) 100%);">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                    Key Insights for the Agentic AI Era (2025-2035)
+                </h2>
+                <div class="space-y-3 text-slate-200" id="key-insights"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const industries = {
+            manufacturing: {
+                title: "Manufacturing Sector",
+                keyDrivers: ["Autonomous factories", "Agentic supply chain optimization", "Self-healing production systems"],
+                timeline: "Peak adoption: 2027-2029",
+                impact: "12x productivity increase by 2035",
+                agenticValue: "$2.8T in new value creation by 2035",
+                agenticUse: "Autonomous production planning, predictive quality control, self-optimizing workflows",
+                roiMultipliers: { year1: 1.15, year2: 1.45, year3: 2.1, year5: 4.2, costSavings: 0.35, revenueGrowth: 0.28, efficiencyGain: 0.42 }
+            },
+            healthcare: {
+                title: "Healthcare Sector",
+                keyDrivers: ["Agentic diagnostics", "Autonomous treatment planning", "AI-driven drug discovery"],
+                timeline: "Peak adoption: 2026-2028",
+                impact: "15x efficiency gains by 2035",
+                agenticValue: "$3.5T in new value creation by 2035",
+                agenticUse: "Autonomous patient triage, real-time treatment optimization, personalized care agents",
+                roiMultipliers: { year1: 1.25, year2: 1.65, year3: 2.5, year5: 5.2, costSavings: 0.42, revenueGrowth: 0.38, efficiencyGain: 0.55 }
+            },
+            logistics: {
+                title: "Logistics & Supply Chain",
+                keyDrivers: ["Autonomous fleet management", "Agentic route optimization", "Self-coordinating warehouses"],
+                timeline: "Peak adoption: 2025-2027",
+                impact: "18x cost reduction by 2035",
+                agenticValue: "$2.1T in new value creation by 2035",
+                agenticUse: "Autonomous demand forecasting, dynamic routing agents, self-organizing distribution networks",
+                roiMultipliers: { year1: 1.35, year2: 1.85, year3: 2.8, year5: 6.5, costSavings: 0.48, revenueGrowth: 0.32, efficiencyGain: 0.58 }
+            },
+            energy: {
+                title: "Energy Sector",
+                keyDrivers: ["Agentic grid management", "Autonomous trading systems", "Self-balancing networks"],
+                timeline: "Peak adoption: 2028-2030",
+                impact: "10x efficiency improvement by 2035",
+                agenticValue: "$1.9T in new value creation by 2035",
+                agenticUse: "Autonomous energy trading, predictive maintenance agents, real-time load balancing",
+                roiMultipliers: { year1: 1.20, year2: 1.55, year3: 2.2, year5: 4.8, costSavings: 0.38, revenueGrowth: 0.25, efficiencyGain: 0.45 }
+            },
+            retail: {
+                title: "Retail & E-commerce",
+                keyDrivers: ["Autonomous inventory management", "Agentic customer personalization", "Dynamic pricing agents"],
+                timeline: "Peak adoption: 2026-2028",
+                impact: "14x revenue growth by 2035",
+                agenticValue: "$3.2T in new value creation by 2035",
+                agenticUse: "Autonomous demand prediction, real-time customer journey optimization, self-adapting merchandising",
+                roiMultipliers: { year1: 1.30, year2: 1.75, year3: 2.6, year5: 5.8, costSavings: 0.32, revenueGrowth: 0.45, efficiencyGain: 0.52 }
+            },
+            finance: {
+                title: "Financial Services",
+                keyDrivers: ["Autonomous trading systems", "Agentic risk assessment", "Self-optimizing portfolios"],
+                timeline: "Peak adoption: 2025-2027",
+                impact: "16x transaction speed by 2035",
+                agenticValue: "$4.1T in new value creation by 2035",
+                agenticUse: "Autonomous fraud detection, real-time credit decisioning, predictive market analysis agents",
+                roiMultipliers: { year1: 1.40, year2: 1.95, year3: 3.1, year5: 7.2, costSavings: 0.46, revenueGrowth: 0.42, efficiencyGain: 0.62 }
+            },
+            agriculture: {
+                title: "Agriculture & Food",
+                keyDrivers: ["Autonomous farming systems", "Agentic crop optimization", "Self-managing supply chains"],
+                timeline: "Peak adoption: 2027-2029",
+                impact: "13x yield increase by 2035",
+                agenticValue: "$1.7T in new value creation by 2035",
+                agenticUse: "Autonomous precision farming, real-time soil optimization, predictive harvest planning agents",
+                roiMultipliers: { year1: 1.18, year2: 1.52, year3: 2.3, year5: 4.9, costSavings: 0.40, revenueGrowth: 0.35, efficiencyGain: 0.48 }
+            },
+            education: {
+                title: "Education & Training",
+                keyDrivers: ["Agentic learning personalization", "Autonomous curriculum adaptation", "AI teaching assistants"],
+                timeline: "Peak adoption: 2026-2028",
+                impact: "11x learning efficiency by 2035",
+                agenticValue: "$2.4T in new value creation by 2035",
+                agenticUse: "Autonomous student assessment, real-time learning path optimization, personalized tutoring agents",
+                roiMultipliers: { year1: 1.22, year2: 1.60, year3: 2.4, year5: 5.0, costSavings: 0.36, revenueGrowth: 0.40, efficiencyGain: 0.50 }
+            },
+            construction: {
+                title: "Construction & Real Estate",
+                keyDrivers: ["Autonomous project management", "Agentic resource allocation", "Self-optimizing schedules"],
+                timeline: "Peak adoption: 2028-2030",
+                impact: "9x project completion speed by 2035",
+                agenticValue: "$1.5T in new value creation by 2035",
+                agenticUse: "Autonomous site monitoring, predictive maintenance planning, dynamic resource optimization agents",
+                roiMultipliers: { year1: 1.12, year2: 1.42, year3: 2.0, year5: 4.3, costSavings: 0.33, revenueGrowth: 0.22, efficiencyGain: 0.40 }
+            },
+            telecom: {
+                title: "Telecommunications",
+                keyDrivers: ["Autonomous network optimization", "Agentic service delivery", "Self-healing infrastructure"],
+                timeline: "Peak adoption: 2026-2028",
+                impact: "17x network efficiency by 2035",
+                agenticValue: "$2.9T in new value creation by 2035",
+                agenticUse: "Autonomous bandwidth allocation, predictive network maintenance, real-time traffic optimization agents",
+                roiMultipliers: { year1: 1.28, year2: 1.72, year3: 2.7, year5: 6.1, costSavings: 0.44, revenueGrowth: 0.36, efficiencyGain: 0.56 }
+            },
+            media: {
+                title: "Media & Entertainment",
+                keyDrivers: ["Agentic content creation", "Autonomous personalization", "Self-optimizing distribution"],
+                timeline: "Peak adoption: 2025-2027",
+                impact: "20x content production by 2035",
+                agenticValue: "$2.6T in new value creation by 2035",
+                agenticUse: "Autonomous content recommendation, real-time audience analysis, personalized experience agents",
+                roiMultipliers: { year1: 1.38, year2: 1.88, year3: 2.9, year5: 6.8, costSavings: 0.30, revenueGrowth: 0.52, efficiencyGain: 0.60 }
+            },
+            pharma: {
+                title: "Pharmaceutical",
+                keyDrivers: ["Agentic drug discovery", "Autonomous clinical trials", "Self-optimizing manufacturing"],
+                timeline: "Peak adoption: 2027-2029",
+                impact: "25x R&D acceleration by 2035",
+                agenticValue: "$3.8T in new value creation by 2035",
+                agenticUse: "Autonomous molecular design, predictive clinical outcomes, real-time supply chain optimization agents",
+                roiMultipliers: { year1: 1.32, year2: 1.80, year3: 2.8, year5: 6.4, costSavings: 0.38, revenueGrowth: 0.48, efficiencyGain: 0.58 }
+            }
+        };
+
+        const historicalData = [
+            { name: "IR 1.0 (1760-1840)", tech: "Steam power, mechanization", years: 80, prod: 2.5, emp: -15 },
+            { name: "IR 2.0 (1870-1914)", tech: "Electricity, mass production", years: 44, prod: 3.2, emp: -8 },
+            { name: "IR 3.0 (1969-2000)", tech: "Computing, automation", years: 31, prod: 4.1, emp: -12 },
+            { name: "IR 4.0 (2011-2024)", tech: "IoT, AI, cyber-physical", years: 25, prod: 5.8, emp: -18 },
+            { name: "IR 5.0 (2025-2035)", tech: "Agentic AI, autonomous systems", years: 15, prod: 12.5, emp: -25, special: true }
+        ];
+
+        let selectedIndustry = 'manufacturing';
+        let mainChart, aiChart, roiChart;
+
+        // Initialize
+        renderHistoricalCards();
+        renderIndustrySelector();
+
+        function renderHistoricalCards() {
+            const container = document.getElementById('historical-cards');
+            container.innerHTML = historicalData.map((ir, idx) => `
+                <div class="${ir.special ? 'bg-purple-500/20 border-purple-400' : 'bg-white/5 border-white/10'} rounded-xl p-4 border hover:border-purple-400/50 transition-all">
+                    <h3 class="font-bold text-xs mb-2">${ir.name}</h3>
+                    <p class="text-xs text-slate-300 mb-3">${ir.tech}</p>
+                    <div class="space-y-1 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Adoption:</span>
+                            <span class="${ir.special ? 'text-purple-400 font-bold' : 'text-blue-400'}">${ir.years}y</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Productivity:</span>
+                            <span class="${ir.special ? 'text-purple-400 font-bold' : 'text-green-400'}">+${ir.prod}x</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Employment:</span>
+                            <span class="text-orange-400">${ir.emp}%</span>
+                        </div>
+                    </div>
+                    ${ir.special ? '<div class="mt-2 pt-2 border-t border-purple-400/30"><span class="text-xs text-purple-300 font-bold">⚡ Fastest transformation ever</span></div>' : ''}
+                </div>
+            `).join('');
+        }
+
+        function renderIndustrySelector() {
+            const container = document.getElementById('industry-selector');
+            container.innerHTML = Object.keys(industries).map(key => `
+                <button onclick="selectIndustry('${key}')" class="industry-btn p-3 rounded-xl font-semibold text-sm transition-all ${key === selectedIndustry ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/50' : 'bg-white/5 hover:bg-white/10 border border-white/20'}" data-industry="${key}">
+                    ${industries[key].title.split(' ')[0]}
+                </button>
+            `).join('');
+        }
+
+        function selectIndustry(industry) {
+            selectedIndustry = industry;
+            renderIndustrySelector();
+        }
+
+        document.getElementById('analyze-btn').addEventListener('click', () => {
+            const btn = document.getElementById('analyze-btn');
+            btn.textContent = 'Analyzing Agentic AI Impact...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                showResults();
+                btn.textContent = 'Generate 2035 Predictions';
+                btn.disabled = false;
+            }, 1500);
+        });
+
+        function showResults() {
+            document.getElementById('results').classList.remove('hidden');
+            const industry = industries[selectedIndustry];
+            
+            // Update insights
+            document.getElementById('insights-title').textContent = industry.title + ' - Agentic AI Transformation';
+            document.getElementById('use-cases').textContent = industry.agenticUse;
+            document.getElementById('roi-industry').textContent = industry.title;
+            
+            const insightsGrid = document.getElementById('insights-grid');
+            insightsGrid.innerHTML = `
+                <div class="bg-purple-500/20 rounded-xl p-4 border border-purple-400/30">
+                    <h3 class="font-bold text-purple-400 mb-2">Key Agentic Drivers</h3>
+                    <ul class="text-sm space-y-1">
+                        ${industry.keyDrivers.map(d => `<li>• ${d}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="bg-pink-500/20 rounded-xl p-4 border border-pink-400/30">
+                    <h3 class="font-bold text-pink-400 mb-2">Adoption Timeline</h3>
+                    <p class="text-sm mb-2">${industry.timeline}</p>
+                    <p class="text-xs text-slate-300">3-5 years faster than traditional AI adoption</p>
+                </div>
+                <div class="bg-green-500/20 rounded-xl p-4 border border-green-400/30">
+                    <h3 class="font-bold text-green-400 mb-2">Expected Impact</h3>
+                    <p class="text-sm font-bold">${industry.impact}</p>
+                </div>
+                <div class="bg-yellow-500/20 rounded-xl p-4 border border-yellow-400/30">
+                    <h3 class="font-bold text-yellow-400 mb-2 flex items-center gap-2">Value Creation</h3>
+                    <p class="text-sm font-bold">${industry.agenticValue}</p>
+                </div>
+            `;
+
+            // Key insights
+            document.getElementById('key-insights').innerHTML = `
+                <p>• <strong class="text-purple-300">Agentic AI Acceleration:</strong> Autonomous agents will drive adoption 60% faster than traditional AI, reaching 98% integration by 2035</p>
+                <p>• <strong class="text-pink-300">Unprecedented Value Creation:</strong> Agentic AI will generate 18.5x baseline value by 2035, surpassing all previous industrial revolutions combined</p>
+                <p>• <strong class="text-blue-300">Multi-Agent Systems:</strong> By 2030, 82% of organizations will deploy collaborative agent networks that autonomously optimize complex operations</p>
+                <p>• <strong class="text-green-300">Productivity Explosion:</strong> The ${industry.title.toLowerCase()} will achieve ${industry.impact.toLowerCase()}, with agents handling 75% of strategic decisions</p>
+                <p>• <strong class="text-yellow-300">Economic Impact:</strong> Agentic AI will create ${industry.agenticValue} in the ${industry.title.toLowerCase()}, fundamentally reshaping value chains</p>
+            `;
+            
+            renderCharts();
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderCharts() {
+            const predictionData = [
+                { year: 2024, adoption: 35, productivity: 120, value: 100, ai: 40, agentic: 5, jobs: 8 },
+                { year: 2025, adoption: 45, productivity: 145, value: 125, ai: 52, agentic: 15, jobs: 12 },
+                { year: 2026, adoption: 55, productivity: 180, value: 165, ai: 63, agentic: 28, jobs: 15 },
+                { year: 2027, adoption: 64, productivity: 225, value: 220, ai: 72, agentic: 42, jobs: 18 },
+                { year: 2028, adoption: 72, productivity: 285, value: 295, ai: 79, agentic: 58, jobs: 21 },
+                { year: 2029, adoption: 79, productivity: 360, value: 395, ai: 84, agentic: 71, jobs: 23 },
+                { year: 2030, adoption: 84, productivity: 455, value: 525, ai: 88, agentic: 82, jobs: 25 },
+                { year: 2031, adoption: 88, productivity: 575, value: 690, ai: 91, agentic: 88, jobs: 26 },
+                { year: 2032, adoption: 91, productivity: 720, value: 
